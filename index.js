@@ -3,13 +3,13 @@ var request = require('request');
 var $ = scraper.load('');
 
 request('https://apps.carleton.edu/campus/registrar/schedule/enroll/?term=18WI&subject=ECON', function (error, response, html) {
-  if (!error && response.statusCode == 200) {
+  if (!error && response.statusCode === 200) {
     $ = scraper.load(html);
     console.log(getAllCourses());
   }
 });
 
-function getAllCourses() {
+module.exports.getAllCourses = function() {
     var courseJSON = [];
     $('div.course').each(function(i, elem) {
         courseJSON.push({
@@ -63,7 +63,7 @@ function getDescription(course) {
     var description = $(course).find('div.description').text().replace(/\s+/g,' ').trim();
     description = description.substring(getProfessor(course).length,
                                         description.length);
-    if(description.length > 0 && description.substring(0, 1) == ' ') {
+    if(description.length > 0 && description.substring(0, 1) === ' ') {
         description = description.substring(1, description.length);
     }
     return description;
