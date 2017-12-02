@@ -1,17 +1,18 @@
-var scraper = require('cheerio');
-var request = require('request');
+const scraper = require('cheerio');
 var $ = scraper.load('');
 
 request('https://apps.carleton.edu/campus/registrar/schedule/enroll/?term=18WI&subject=ECON', function (error, response, html) {
-  if (!error && response.statusCode === 200) {
-    $ = scraper.load(html);
-    console.log(getAllCourses());
-  }
+    if (!error && response.statusCode === 200) {
+        console.log('page loaded');
+        $ = scraper.load(html);
+    }
 });
 
-module.exports.getAllCourses = function() {
+module.exports.getAllCourses = function(html) {
+    $ = scraper.load(html);
     var courseJSON = [];
     $('div.course').each(function(i, elem) {
+        console.log('newElem');
         courseJSON.push({
             name: getCourseName(this),
             prof: getProfessor(this),
