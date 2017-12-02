@@ -1,13 +1,6 @@
 const scraper = require('cheerio');
 var $ = scraper.load('');
 
-request('https://apps.carleton.edu/campus/registrar/schedule/enroll/?term=18WI&subject=ECON', function (error, response, html) {
-    if (!error && response.statusCode === 200) {
-        console.log('page loaded');
-        $ = scraper.load(html);
-    }
-});
-
 module.exports.getAllCourses = function(html) {
     $ = scraper.load(html);
     var courseJSON = [];
